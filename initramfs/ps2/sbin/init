@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
+
+mount -t sysfs none /sys
+mount -t tmpfs none /var
+mount -t tmpfs none /tmp
+mount -t proc none /proc
+mkdir /dev/pts
+mount -t devpts none /dev/pts
+mount -t debugfs none /sys/kernel/debug
+
+modprobe ps2fb mode_option=1920x1080p@60
+modprobe ohci-ps2
+
+modprobe sd_mod
+modprobe ums-usbat
+modprobe usbhid
+modprobe hid-generic
+
+uname -a
+cat /proc/cpuinfo
+
+sh
+
+while :
+do
+	sleep 1
+done
