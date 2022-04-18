@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2020 Tobias Gruetzmacher
+
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3:latest as gentoo
 ENV ARCH=mips CROSS_COMPILE=mipsr5900el-unknown-linux-gnu-
