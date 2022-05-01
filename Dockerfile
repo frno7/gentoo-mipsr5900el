@@ -4,7 +4,6 @@
 
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3:latest as gentoo
-ENV ARCH=mips CROSS_COMPILE=mipsr5900el-unknown-linux-gnu-
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
@@ -36,8 +35,6 @@ RUN \
 	USE=static-libs emerge -v dev-libs/glib sys-libs/liburing sys-libs/zlib && \
 	USE=static-user emerge -v app-emulation/qemu-mipsr5900el
 
-WORKDIR /srv
-
 # sys-apps/busybox
 RUN \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox && \
@@ -48,16 +45,19 @@ RUN \
 	ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod && \
 	ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-gnu-emerge -v sys-firmware/iopmod
 
+WORKDIR /srv
+
 # initramfs
-COPY initramfs/ps2/init ./initramfs/ps2/
-COPY initramfs/ps2/sbin/init ./initramfs/ps2/sbin/
+COPY initramfs/ps2/init initramfs/ps2/
+COPY initramfs/ps2/sbin/init initramfs/ps2/sbin/
 RUN \
 	mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var} && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/bin/busybox initramfs/ps2/bin/ && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
-# Kernel layer: This takes 1.72 Gb
-ENV INSTALL_MOD_PATH=../initramfs/ps2/ INSTALL_MOD_STRIP=1
+# The Linux kernel takes about 1.7 GB
+ENV ARCH=mips CROSS_COMPILE=mipsr5900el-unknown-linux-gnu-
+ENV INSTALL_MOD_PATH=../initramfs/ps2 INSTALL_MOD_STRIP=1
 RUN git clone https://github.com/frno7/linux --depth 1 && cd linux && \
 	make -j $(getconf _NPROCESSORS_ONLN) ps2_defconfig && \
 	make -j $(getconf _NPROCESSORS_ONLN) oldconfig && \
