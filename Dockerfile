@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (C) 2020 Tobias Gruetzmacher
+# Copyright (C) 2022 Fredrik Noring
 
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3:latest as gentoo
@@ -42,12 +43,10 @@ RUN \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox && \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
 
-# iopmod
+# sys-firmware/iopmod
 RUN \
-	git clone https://github.com/frno7/iopmod --depth 1 && \
-	cd iopmod && make
-	# make clean && git checkout gamepad && make && \
-	# cp module/*.irx ../initramfs/ps2/lib/firmware/ps2/
+	ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod && \
+	ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-gnu-emerge -v sys-firmware/iopmod
 
 # initramfs
 COPY initramfs/ps2/init ./initramfs/ps2/
@@ -55,7 +54,7 @@ COPY initramfs/ps2/sbin/init ./initramfs/ps2/sbin/
 RUN \
 	mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var} && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/bin/busybox initramfs/ps2/bin/ && \
-	cp iopmod/module/*.irx initramfs/ps2/lib/firmware/ps2/
+	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
 # Kernel layer: This takes 1.72 Gb
 ENV INSTALL_MOD_PATH=../initramfs/ps2/ INSTALL_MOD_STRIP=1
