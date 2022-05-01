@@ -9,6 +9,7 @@ COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 # sys-devel/bc, sys-devel/crossdev, dev-vcs/git, and app-portage/gentoolkit
 COPY crossdev.conf /etc/portage/repos.conf/
+COPY patches/musl/r5900-ll-sc.patch /etc/portage/patches/cross-mipsr5900el-unknown-linux-musl/musl/
 RUN \
 	mkdir -p /var/db/repos/crossdev/{profiles,metadata} && \
 	echo 'crossdev' >/var/db/repos/crossdev/profiles/repo_name && \
@@ -16,6 +17,7 @@ RUN \
 	chown -R portage:portage /var/db/repos/crossdev && \
 	emerge sys-devel/bc sys-devel/crossdev dev-vcs/git && \
 	crossdev --stage4 --target mipsr5900el-unknown-linux-gnu && \
+	crossdev --stage4 --target mipsr5900el-unknown-linux-musl && \
 	emerge -v app-portage/gentoolkit && \
 	eclean distfiles
 
@@ -34,7 +36,8 @@ WORKDIR /srv
 
 # sys-apps/busybox
 RUN \
-	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox
+	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox && \
+	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
 
 # iopmod
 RUN \

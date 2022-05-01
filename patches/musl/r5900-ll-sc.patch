@@ -1,0 +1,41 @@
+commit 5d3dfe718530cd1fd2e68885350b1abc2b04331d (HEAD -> master)
+Author: Fredrik Noring <noring@nocrew.org>
+Date:   Thu Dec 24 14:08:30 2020 +0100
+
+    MIPS: Use `.set mips2' to emulate LL/SC for the R5900 too
+    
+    GAS treats the R5900 as MIPS III, with some modifications.  The MIPS III
+    designation means that the GNU C Library will try to assemble the LL and
+    SC instructions, even though they are not implemented in the R5900.  GAS
+    will therefore produce the following errors:
+    
+    Error: opcode not supported on this processor: r5900 (mips3) `ll $3,0($5)'
+    Error: opcode not supported on this processor: r5900 (mips3) `sc $3,0($5)'
+    
+    The MIPS II ISA override as used here enables the kernel to trap and
+    emulate the LL and SC instructions, as required.
+
+diff --git a/arch/mips/atomic_arch.h b/arch/mips/atomic_arch.h
+index 1248d177..ef21cb23 100644
+--- a/arch/mips/atomic_arch.h
++++ b/arch/mips/atomic_arch.h
+@@ -8,7 +8,8 @@
+ static inline int a_ll(volatile int *p)
+ {
+ 	int v;
+-#if __mips < 2
++	/* The R5900 reports itself as MIPS III but it does not have LL/SC. */
++#if __mips < 2 || defined(_MIPS_ARCH_R5900)
+ 	__asm__ __volatile__ (
+ 		".set push ; .set mips2\n\t"
+ 		"ll %0, %1"
+@@ -26,7 +27,8 @@ static inline int a_ll(volatile int *p)
+ static inline int a_sc(volatile int *p, int v)
+ {
+ 	int r;
+-#if __mips < 2
++	/* The R5900 reports itself as MIPS III but it does not have LL/SC. */
++#if __mips < 2 || defined(_MIPS_ARCH_R5900)
+ 	__asm__ __volatile__ (
+ 		".set push ; .set mips2\n\t"
+ 		"sc %0, %1"
