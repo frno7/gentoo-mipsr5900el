@@ -19,8 +19,8 @@ RUN \
 	emerge -v app-eselect/eselect-repository && \
 	eselect repository add frno7 git https://github.com/frno7/gentoo.overlay && \
 	emaint sync -r frno7 && \
-	emerge -v dev-libs/glib && \
-	emerge -v app-emulation/qemu-mipsr5900el && \
+	USE=static-libs emerge -v dev-libs/glib sys-libs/liburing sys-libs/zlib && \
+	USE=static-user emerge -v app-emulation/qemu-mipsr5900el && \
 	emerge -v app-portage/gentoolkit && \
 	eclean distfiles
 
