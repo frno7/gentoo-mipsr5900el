@@ -10,10 +10,10 @@ COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 # qemu, croosdev and clean
 COPY crossdev.conf /etc/portage/repos.conf/
 RUN \
-	mkdir -p /var/db/repos/localrepo-crossdev/{profiles,metadata} && \
-	echo 'crossdev' > /var/db/repos/localrepo-crossdev/profiles/repo_name && \
-	echo 'masters = gentoo' > /var/db/repos/localrepo-crossdev/metadata/layout.conf && \
-	chown -R portage:portage /var/db/repos/localrepo-crossdev && \
+	mkdir -p /var/db/repos/crossdev/{profiles,metadata} && \
+	echo 'crossdev' >/var/db/repos/crossdev/profiles/repo_name && \
+	echo 'masters = gentoo' >/var/db/repos/crossdev/metadata/layout.conf && \
+	chown -R portage:portage /var/db/repos/crossdev && \
 	emerge bc crossdev dev-vcs/git && \
 	crossdev --stage4 --target mipsr5900el-unknown-linux-gnu && \
 	emerge -v app-eselect/eselect-repository && \
