@@ -39,6 +39,11 @@ RUN \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox && \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
 
+# sys-apps/fbset
+RUN \
+	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/fbset && \
+	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
+
 # sys-firmware/iopmod
 RUN \
 	ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod && \
@@ -52,6 +57,7 @@ COPY initramfs/ps2/sbin/init initramfs/ps2/sbin/
 RUN \
 	mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var} && \
 	cp /usr/mipsr5900el-unknown-linux-musl/bin/busybox initramfs/ps2/bin/ && \
+	cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/fbset initramfs/ps2/usr/bin/ && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
 # The Linux kernel takes about 1.7 GB
