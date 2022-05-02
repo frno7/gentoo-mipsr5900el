@@ -25,7 +25,10 @@ RUN \
 RUN \
 	emerge -v app-eselect/eselect-repository && \
 	eselect repository add frno7 git https://github.com/frno7/gentoo.overlay && \
-	emaint sync -r frno7
+	emaint sync -r frno7 && \
+	mkdir /usr/mipsr5900el-unknown-linux-{gnu,musl}/etc/portage/repos.conf && \
+	ln -s /etc/portage/repos.conf/eselect-repo.conf /usr/mipsr5900el-unknown-linux-gnu/etc/portage/repos.conf/eselect-repo.conf && \
+	ln -s /etc/portage/repos.conf/eselect-repo.conf /usr/mipsr5900el-unknown-linux-musl/etc/portage/repos.conf/eselect-repo.conf
 
 # app-emulation/qemu-mipsr5900el
 RUN \
