@@ -8,7 +8,7 @@ FROM gentoo/stage3:latest as gentoo
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 # sys-devel/crossdev and app-portage/gentoolkit
-COPY crossdev.conf /etc/portage/repos.conf/
+COPY configs/crossdev.conf /etc/portage/repos.conf/
 COPY patches/musl/r5900-ll-sc.patch /etc/portage/patches/cross-mipsr5900el-unknown-linux-musl/musl/
 RUN \
 	mkdir -p /var/db/repos/crossdev/{profiles,metadata} && \
