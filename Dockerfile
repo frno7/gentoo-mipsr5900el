@@ -44,6 +44,11 @@ RUN \
 	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/fbset && \
 	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
 
+# net-misc/dropbear
+RUN \
+	ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-gnu -v net-misc/dropbear && \
+	ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
+
 # sys-firmware/iopmod
 RUN \
 	ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod && \
@@ -58,6 +63,10 @@ RUN \
 	mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var} && \
 	cp /usr/mipsr5900el-unknown-linux-musl/bin/busybox initramfs/ps2/bin/ && \
 	cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/fbset initramfs/ps2/usr/bin/ && \
+	cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/dropbearmulti initramfs/ps2/usr/bin/ && \
+	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti dropbear) && \
+	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti scp) && \
+	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti ssh) && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
 # The Linux kernel takes about 1.7 GB
