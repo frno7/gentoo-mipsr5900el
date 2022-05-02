@@ -7,7 +7,7 @@ FROM gentoo/stage3:latest as gentoo
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
-# sys-devel/bc, sys-devel/crossdev, dev-vcs/git, and app-portage/gentoolkit
+# sys-devel/crossdev and app-portage/gentoolkit
 COPY crossdev.conf /etc/portage/repos.conf/
 COPY patches/musl/r5900-ll-sc.patch /etc/portage/patches/cross-mipsr5900el-unknown-linux-musl/musl/
 RUN \
@@ -21,7 +21,7 @@ RUN \
 	emerge -v app-portage/gentoolkit && \
 	eclean distfiles
 
-# Add frno7 repo
+# frno7 repo
 RUN \
 	emerge -v app-eselect/eselect-repository && \
 	eselect repository add frno7 git https://github.com/frno7/gentoo.overlay && \
@@ -66,7 +66,7 @@ RUN git clone https://github.com/frno7/linux --depth 1 && cd linux && \
 	make -j $(getconf _NPROCESSORS_ONLN) modules_install && \
 	make -j $(getconf _NPROCESSORS_ONLN) vmlinuz
 
-# Clean
+# clean
 RUN \
 	eclean distfiles
 
