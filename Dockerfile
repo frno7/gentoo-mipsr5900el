@@ -51,7 +51,7 @@ COPY initramfs/ps2/init initramfs/ps2/
 COPY initramfs/ps2/sbin/init initramfs/ps2/sbin/
 RUN \
 	mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var} && \
-	cp /usr/mipsr5900el-unknown-linux-gnu/bin/busybox initramfs/ps2/bin/ && \
+	cp /usr/mipsr5900el-unknown-linux-musl/bin/busybox initramfs/ps2/bin/ && \
 	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
 # The Linux kernel takes about 1.7 GB
