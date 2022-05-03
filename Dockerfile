@@ -36,17 +36,14 @@ RUN \
 
 # sys-apps/busybox
 RUN \
-	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/busybox && \
 	USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
 
 # sys-apps/fbset
 RUN \
-	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-gnu -v sys-apps/fbset && \
 	ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
 
 # net-misc/dropbear
 RUN \
-	ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-gnu -v net-misc/dropbear && \
 	ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
 
 # sys-firmware/iopmod
