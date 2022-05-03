@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+. scripts/install-crossdev
+. scripts/install-frno7-repo
+. scripts/install-packages
+. scripts/install-initramfs
+. scripts/install-kernel
+
+eclean distfiles

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# app-emulation/qemu-mipsr5900el (rc-update add qemu-mipsr5900el-binfmt)
+USE="static-user static-libs" emerge -j4 -v app-emulation/qemu-mipsr5900el
+
+# sys-apps/busybox
+USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
+
+# sys-apps/fbset
+ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
+
+# net-misc/dropbear
+ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
+
+# sys-firmware/iopmod
+ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod
+ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-musl-emerge -v sys-firmware/iopmod

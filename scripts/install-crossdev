@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mkdir -p /var/db/repos/crossdev/{profiles,metadata}
+echo crossdev >/var/db/repos/crossdev/profiles/repo_name
+echo 'masters = gentoo' >/var/db/repos/crossdev/metadata/layout.conf
+chown -R portage:portage /var/db/repos/crossdev
+
+mkdir /etc/portage/repos.conf
+cp configs/crossdev.conf /etc/portage/repos.conf/
+
+emerge -j4 -v sys-devel/bc sys-devel/crossdev dev-vcs/git app-portage/gentoolkit
+
+mkdir -p /etc/portage/patches/cross-mipsr5900el-unknown-linux-musl/musl
+cp patches/musl/r5900-ll-sc.patch /etc/portage/patches/cross-mipsr5900el-unknown-linux-musl/musl/
+
+crossdev --stage4 --target mipsr5900el-unknown-linux-gnu
+crossdev --stage4 --target mipsr5900el-unknown-linux-musl
+
+eclean distfiles
