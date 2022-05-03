@@ -30,7 +30,7 @@ RUN \
 	ln -s /etc/portage/repos.conf/eselect-repo.conf /usr/mipsr5900el-unknown-linux-gnu/etc/portage/repos.conf/eselect-repo.conf && \
 	ln -s /etc/portage/repos.conf/eselect-repo.conf /usr/mipsr5900el-unknown-linux-musl/etc/portage/repos.conf/eselect-repo.conf
 
-# app-emulation/qemu-mipsr5900el
+# app-emulation/qemu-mipsr5900el (rc-update add qemu-mipsr5900el-binfmt)
 RUN \
 	USE="static-user static-libs" emerge -v app-emulation/qemu-mipsr5900el
 
