@@ -49,7 +49,7 @@ RUN \
 # sys-firmware/iopmod
 RUN \
 	ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod && \
-	ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-gnu-emerge -v sys-firmware/iopmod
+	ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-musl-emerge -v sys-firmware/iopmod
 
 WORKDIR /srv
 
@@ -64,10 +64,10 @@ RUN \
 	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti dropbear) && \
 	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti scp) && \
 	(cd initramfs/ps2/usr/bin && ln -s dropbearmulti ssh) && \
-	cp /usr/mipsr5900el-unknown-linux-gnu/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
+	cp /usr/mipsr5900el-unknown-linux-musl/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
 
 # The Linux kernel takes about 1.7 GB
-ENV ARCH=mips CROSS_COMPILE=mipsr5900el-unknown-linux-gnu-
+ENV ARCH=mips CROSS_COMPILE=mipsr5900el-unknown-linux-musl-
 ENV INSTALL_MOD_PATH=../initramfs/ps2 INSTALL_MOD_STRIP=1
 RUN git clone https://github.com/frno7/linux --depth 1 && cd linux && \
 	make -j $(getconf _NPROCESSORS_ONLN) ps2_defconfig && \
