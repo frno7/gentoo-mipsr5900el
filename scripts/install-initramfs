@@ -1,13 +1,13 @@
 #!/bin/bash
 
-mkdir -p initramfs/ps2/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var}
+mkdir -p initramfs/{lib/firmware/ps2,bin,dev,etc,mnt,proc,root,sbin,sys,tmp,usr,usr/bin,usr/sbin,var}
 
-cp /usr/mipsr5900el-unknown-linux-musl/bin/busybox initramfs/ps2/bin/
+cp /usr/mipsr5900el-unknown-linux-musl/bin/busybox initramfs/bin/
 
-cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/fbset initramfs/ps2/usr/bin/
+cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/fbset initramfs/usr/bin/
 
-cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/dropbearmulti initramfs/ps2/usr/bin/
-(cd initramfs/ps2/usr/bin &&
+cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/dropbearmulti initramfs/usr/bin/
+(cd initramfs/usr/bin &&
  ln -s dropbearmulti dropbear &&
  ln -s dropbearmulti scp &&
  ln -s dropbearmulti ssh)
