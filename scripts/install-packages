@@ -4,7 +4,10 @@
 USE="static-user static-libs" emerge -j4 -v app-emulation/qemu-mipsr5900el
 
 # sys-apps/busybox
-USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
+mkdir -p /usr/mipsr5900el-unknown-linux-musl/etc/portage/savedconfig/sys-apps
+cp configs/busybox /usr/mipsr5900el-unknown-linux-musl/etc/portage/savedconfig/sys-apps/
+USE="-make-symlinks prefix-guest static savedconfig math ipv6 syslog" \
+	emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busybox
 
 # sys-apps/fbset
 ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
