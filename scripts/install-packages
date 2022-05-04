@@ -10,8 +10,10 @@ USE="prefix-guest static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/busy
 ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-apps/fbset
 
 # net-misc/dropbear
-ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
+ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" \
+	emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
 
 # sys-firmware/iopmod
 ACCEPT_KEYWORDS="**" USE="-modules tools static" emerge -v sys-firmware/iopmod
-ACCEPT_KEYWORDS="**" USE="modules -tools" mipsr5900el-unknown-linux-musl-emerge -v sys-firmware/iopmod
+ACCEPT_KEYWORDS="**" USE="modules -tools" \
+	mipsr5900el-unknown-linux-musl-emerge -v sys-firmware/iopmod
