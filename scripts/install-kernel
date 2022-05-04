@@ -13,4 +13,5 @@ git clone https://github.com/frno7/linux --depth 1
  make -j $(getconf _NPROCESSORS_ONLN) vmlinux &&
  make -j $(getconf _NPROCESSORS_ONLN) modules &&
  make -j $(getconf _NPROCESSORS_ONLN) modules_install &&
+ rm ../initramfs/ps2/lib/modules/*/{build,modules.*,source} &&
  make -j $(getconf _NPROCESSORS_ONLN) vmlinuz)
