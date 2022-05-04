@@ -11,5 +11,3 @@ cp /usr/mipsr5900el-unknown-linux-musl/usr/bin/dropbearmulti initramfs/ps2/usr/b
  ln -s dropbearmulti dropbear &&
  ln -s dropbearmulti scp &&
  ln -s dropbearmulti ssh)
-
-cp /usr/mipsr5900el-unknown-linux-musl/lib/firmware/ps2/* initramfs/ps2/lib/firmware/ps2/
