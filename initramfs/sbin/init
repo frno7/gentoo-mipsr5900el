@@ -26,6 +26,7 @@ modprobe ums-usbat
 modprobe usbhid
 modprobe hid-generic
 
+grep machine </proc/cpuinfo | sed 's/[[:space:]]\+//'
 uname -a
 
 sh
