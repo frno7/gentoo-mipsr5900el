@@ -1,5 +1,5 @@
 # source: https://github.com/actions/starter-workflows/blob/970a7b52557fbdf7dc31c20e64499c21f45deff2/ci/docker-publish.yml
-name: Docker
+name: Gentoo Docker mipsr5900el
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by

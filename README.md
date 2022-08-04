@@ -1,3 +1,5 @@
+![compilation workflow](https://github.com/frno7/gentoo-mipsr5900el/actions/workflows/docker-publish.yml/badge.svg)
+
 # Gentoo tooling for the PlayStation 2 Linux kernel
 
 Scripts to install `mipsr5900el` target cross-compilers, with both
