@@ -31,10 +31,3 @@ echo -e "\e[?6c"
 
 grep machine </proc/cpuinfo | sed 's/[[:space:]]\+//'
 uname -a
-
-sh
-
-while :
-do
-	sleep 1
-done
