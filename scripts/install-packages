@@ -18,3 +18,7 @@ ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" \
 
 # app-misc/evtest
 LDFLAGS="-static" emerge-mipsr5900el-unknown-linux-musl -v app-misc/evtest
+
+# games-util/joystick
+ACCEPT_KEYWORDS='**' LDFLAGS="-static" \
+	emerge-mipsr5900el-unknown-linux-musl -v games-util/joystick
