@@ -15,3 +15,6 @@ ACCEPT_KEYWORDS="*" USE="static" emerge-mipsr5900el-unknown-linux-musl -v sys-ap
 # net-misc/dropbear
 ACCEPT_KEYWORDS="*" USE="-minimal multicall static static-libs" \
 	emerge-mipsr5900el-unknown-linux-musl -v net-misc/dropbear
+
+# app-misc/evtest
+LDFLAGS="-static" emerge-mipsr5900el-unknown-linux-musl -v app-misc/evtest
